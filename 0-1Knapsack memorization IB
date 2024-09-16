@@ -1,0 +1,44 @@
+
+int max(int a,int b)
+{
+    if(a>b)return a;
+    else return b;
+}
+int t[1002][1002];
+int ans(vector<int> val,vector<int> wt, int w,int n)
+{ int temp1=0;
+int temp2=0;
+    if(w==0||n==0)return 0;
+    
+    if(t[w][n]!=-1)return t[w][n];
+    else
+    {
+        if(wt[n-1]>w)
+        {
+            t[w][n]=ans(val,wt,w,n-1);
+        }
+        else
+        {
+            temp1=val[n-1]+ans(val,wt,w-wt[n-1],n-1);
+            temp2=ans(val,wt,w,n-1);
+            t[w][n]=max(temp1,temp2);
+            
+        }
+        return t[w][n];
+    }
+}
+
+
+
+
+
+
+
+int Solution::solve(vector<int> &A, vector<int> &B, int C) {
+    memset(t,-1,sizeof(t));
+    int n=A.size();
+    return ans(A,B,C,n);
+}
+
+
+
